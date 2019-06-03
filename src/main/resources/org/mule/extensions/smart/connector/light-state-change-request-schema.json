@@ -1,0 +1,59 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/LightStateChangeRequest",
+    "definitions": {
+        "LightStateChangeRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "on": {
+                    "type": "boolean"
+                },
+                "bri": {
+                    "type": "integer"
+                },
+                "hue": {
+                    "type": "integer"
+                },
+                "sat": {
+                    "type": "integer"
+                },
+                "xy": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "ct": {
+                    "type": "integer"
+                },
+                "alert": {
+                    "type": "string"
+                },
+                "effect": {
+                    "type": "string"
+                },
+                "transitiontime": {
+                    "type": "integer"
+                },
+                "bri_inc": {
+                    "type": "integer"
+                },
+                "sat_inc": {
+                    "type": "integer"
+                },
+                "hue_inc": {
+                    "type": "integer"
+                },
+                "ct_inc": {
+                    "type": "integer"
+                },
+                "xy_inc": {
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "title": "LightStateChangeRequest"
+        }
+    }
+}

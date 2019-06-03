@@ -1,0 +1,208 @@
+{
+	"$schema": "http://json-schema.org/draft-06/schema#",
+	"$ref": "#/definitions/LightsResponseBySpecificationOptional",
+	"definitions": {
+		"1": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"state": {
+					"$ref": "#/definitions/State"
+				},
+				"swupdate": {
+					"$ref": "#/definitions/Swupdate"
+				},
+				"type": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"modelid": {
+					"type": "string"
+				},
+				"manufacturername": {
+					"type": "string"
+				},
+				"productname": {
+					"type": "string"
+				},
+				"capabilities": {
+					"$ref": "#/definitions/Capabilities"
+				},
+				"config": {
+					"$ref": "#/definitions/Config"
+				},
+				"uniqueid": {
+					"type": "string"
+				},
+				"swversion": {
+					"type": "string"
+				}
+			},
+			"required": [],
+			"title": "1"
+		},
+		"LightsResponseBySpecificationOptional": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"1": {
+					"$ref": "#/definitions/1"
+				}
+			},
+			"required": [],
+			"title": "LightsResponseBySpecificationOptional"
+		},
+		"Capabilities": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"certified": {
+					"type": "boolean"
+				},
+				"control": {
+					"$ref": "#/definitions/Control"
+				},
+				"streaming": {
+					"$ref": "#/definitions/Streaming"
+				}
+			},
+			"required": [],
+			"title": "Capabilities"
+		},
+		"Control": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"mindimlevel": {
+					"type": "integer"
+				},
+				"maxlumen": {
+					"type": "integer"
+				},
+				"colorgamuttype": {
+					"type": "string"
+				},
+				"colorgamut": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
+					}
+				},
+				"ct": {
+					"$ref": "#/definitions/CT"
+				}
+			},
+			"required": [],
+			"title": "Control"
+		},
+		"CT": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"min": {
+					"type": "integer"
+				},
+				"max": {
+					"type": "integer"
+				}
+			},
+			"required": [],
+			"title": "CT"
+		},
+		"Streaming": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"renderer": {
+					"type": "boolean"
+				},
+				"proxy": {
+					"type": "boolean"
+				}
+			},
+			"required": [],
+			"title": "Streaming"
+		},
+		"Config": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"archetype": {
+					"type": "string"
+				},
+				"function": {
+					"type": "string"
+				},
+				"direction": {
+					"type": "string"
+				}
+			},
+			"required": [],
+			"title": "Config"
+		},
+		"State": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"on": {
+					"type": "boolean"
+				},
+				"bri": {
+					"type": "integer"
+				},
+				"hue": {
+					"type": "integer"
+				},
+				"sat": {
+					"type": "integer"
+				},
+				"effect": {
+					"type": "string"
+				},
+				"xy": {
+					"type": "array",
+					"items": {
+						"type": "number"
+					}
+				},
+				"ct": {
+					"type": "integer"
+				},
+				"alert": {
+					"type": "string"
+				},
+				"colormode": {
+					"type": "string"
+				},
+				"mode": {
+					"type": "string"
+				},
+				"reachable": {
+					"type": "boolean"
+				}
+			},
+			"required": [],
+			"title": "State"
+		},
+		"Swupdate": {
+			"type": "object",
+			"additionalProperties": false,
+			"properties": {
+				"state": {
+					"type": "string"
+				},
+				"lastinstall": {
+					"type": "string",
+					"format": "date-time"
+				}
+			},
+			"required": [],
+			"title": "Swupdate"
+		}
+	}
+}

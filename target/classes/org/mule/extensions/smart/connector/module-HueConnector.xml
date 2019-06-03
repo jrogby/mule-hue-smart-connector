@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module name="Hue Smart Connector" prefix="module-hueconnector"
+	doc:description="This module relies in runtime provided components"
+	xmlns="http://www.mulesoft.org/schema/mule/module" xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+	xmlns:validation="http://www.mulesoft.org/schema/mule/validation"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:tns="http://www.mulesoft.org/schema/mule/module-hueconnector"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xsi:schemaLocation="
+           http://www.mulesoft.org/schema/mule/module http://www.mulesoft.org/schema/mule/module/current/mule-module.xsd
+           http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+           http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd
+           http://www.mulesoft.org/schema/mule/module-hueconnector http://www.mulesoft.org/schema/mule/module-hueconnector/current/mule-module-hueconnector.xsd
+           http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd" vendor="io.github.jrogby">
+
+	<property name="pHost" displayName="host" type="string"
+		defaultValue="127.0.0.1" summary="Bridge address" />
+	<property name="pPort" displayName="port" type="string"
+		defaultValue="8000" summary="Bridge port" />
+	<property name="pUsername" displayName="username" type="string"
+		summary="Bridge username (API-key)" />
+
+	<http:request-config name="bridge-config"
+		xmlns:connection="true" basePath="/api">
+		<http:request-connection host="#[vars.pHost]"
+			protocol="HTTP" port="#[vars.pPort]" />
+	</http:request-config>
+		
+	<operation displayName="_Internal Tests" name="internal-test">
+		<parameters>
+			<parameter name="pLID" type="number" />
+			<parameter name="pOnState" type="string"/>
+		</parameters>
+		<body>
+			<mule:set-payload value="#[ '{on:' ++ vars.pOnState ++'}' ]" mimeType="application/json"/>
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pLID ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+
+<!-- 			<parameter name="pLightId" displayName="Light ID" type="number" /> -->
+<!-- 			<parameter name="pLightTransitionTime" displayName="Transition Time (x100ms)" type="number" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightState" displayName="Change state to" type="binary" doc:description="Change state to ON if set true, OFF if set false." use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightBri" displayName="Brightness" type="number" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightBriInc" displayName="Brightness change" type="number" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightHue" displayName="Hue" type="number" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightSat" displayName="Saturation" type="number" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightXy" displayName="CIE Coordinat XY" type="CIEXyType" use="OPTIONAL" /> -->
+<!-- 			<parameter name="pLightCt" displayName="Color Temperature" type="number" use="OPTIONAL" /> -->
+<!-- 		<body> -->
+<!-- 			<tns:set-light-state pLightId="pLightId" pLightBri="pLightBri" pLightBriInc="pLightBriInc" pLightTransitionTime="pLightTransitionTime" /> -->
+<!-- 		</body> -->
+<!-- 	<operation displayName="Set CIE Coordinates on Light" name="set-light-state-xy" doc:description="Modify the x and y coordinates of a color in CIE color space."> -->
+<!-- 			<parameter name="pLightId" displayName="Light ID" type="number" /> -->
+<!-- 			<parameter name="pLightXy" displayName="Coordinat XY" type="CIEXyType" doc:description="The x and y coordinates of a color in CIE color space.The first entry is the x coordinate and the second entry is the y coordinate. Both x and y must be between 0 and 1. If the specified coordinates are not in the CIE color space, the closest color to the coordinates will be chosen." /> -->
+<!-- 	<operation displayName="Set Color Temperature" name="set-light-state-ct" doc:description="Set the Color Temperature value."> -->
+<!-- 			<parameter name="pLightId" displayName="Light ID" type="number" /> -->
+<!-- 			<parameter name="pLightCt" displayName="Color Temperature Value" type="number" doc:description="The Mired color temperature of the light. 2012 connected lights are capable of 153 (6500K) to 500 (2000K)." /> -->
+
+
+
+<!-- ### Lights ### Basic operations -->
+<!-- TODO: Re use operations -->
+<!-- TODO: Add transision time logic -->
+	<operation displayName="List All Lights" name="get-all-lights"
+				doc:description="Gets a list of all lights that have been discovered by the bridge.">
+		<body>
+			<mule:set-payload value="" mimeType="application/json" />
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights']" method="GET" />
+		</body>
+		<output type="LightsResponseValue" />
+	</operation>
+
+	<operation displayName="Get Attribute"
+				name="get-light" doc:description="Gets the attributes and state of a given light.">
+		<parameters>
+			<parameter displayName="Light ID" name="pId" type="number" />
+		</parameters>
+		<body>
+			<mule:set-payload value="" mimeType="application/json" />
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId]" method="GET" />
+		</body>
+		<output type="LightAttributeResponseType" />
+	</operation>
+	
+	<operation displayName="Switch On" name="set-light-state-on" 
+				doc:description="Change light source to state to on.">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" />
+		</parameters>
+		<body>
+			<mule:set-payload value="#['{on:true}']" mimeType="application/json"/>
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+	
+	<operation displayName="Switch On (fade in)" name="set-light-state-on-fadein"
+				doc:description="Change light source state to on by fading in.">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" />
+			<parameter name="pTime" displayName="Transition Time Value (x100ms)" type="number" doc:description="The duration of the transition from the light’s current state to the new state. This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transitiontime:10 will make the transition last 1 second." defaultValue="5" />
+		</parameters>
+		<body>
+			<mule:set-payload value="#[ '{on:true},{transitiontime:' ++ vars.pTime ++ '}' ]" mimeType="application/json"/>
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+	
+	<operation displayName="Switch Off" name="set-light-state-off" 
+				doc:description="Change light source state to off by fade out.">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" />
+		</parameters>
+		<body>
+			<mule:set-payload value="#['{on:false}']" mimeType="application/json"/>
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+	
+	<operation displayName="Switch Off (fade out)" name="set-light-state-off-fadeout"
+				doc:description="Change light source state to OFF (false).">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" />
+			<parameter name="pTime" displayName="Transition Time Value (x100ms)" type="number" doc:description="The duration of the transition from the light’s current state to the new state. This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transitiontime:10 will make the transition last 1 second." defaultValue="5" />
+		</parameters>
+		<body>
+			<mule:set-payload value="#[ '{on:false},{transitiontime:' ++ vars.pTime ++ '}' ]" mimeType="application/json"/>		
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+
+<!-- ### Lights ### Brightness operations -->
+<!-- TODO: Re use operations -->
+<!-- TODO: Add transision time logic -->
+<!-- TODO: Logic for having it all related functions in same operation? -->
+
+<!-- 	<operation displayName="Set Brightness on Light" name="set-light-state-bri" doc:description="Set the brightness value to set the light to."> -->
+<!-- 			<parameter name="pLightBri" displayName="Brightness" type="number" use="OPTIONAL" doc:description="Brightness is a scale from 1 (the minimum the light is capable of) to 254 (the maximum)." /> -->
+<!-- 			<parameter name="pLightBriInc" displayName="Brightness Change" type="number" use="OPTIONAL" doc:description="Increments or decrements the value of the brightness.  bri_inc is ignored if the bri attribute is provided. Any ongoing bri transition is stopped. Setting a value of 0 also stops any ongoing transition. The bridge will return the bri value after the increment is performed." /> -->
+
+<!-- ### Lights ### Color operations -->
+<!-- TODO: Re use operations -->
+<!-- TODO: Add transision time logic -->
+<!-- TODO: Logic for having it all related functions in same operation? -->
+<!-- TODO: Create place holders / function to create request bodies -->
+
+	<operation displayName="Set Hue" name="set-light-state-hue"
+				doc:description="Set the hue value.">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" order="0" use="REQUIRED"/>
+			<parameter name="pValue" displayName="Hue Value (0-65535)" type="number" doc:description="The hue value is a wrapping value between 0 and 65535. Both 0 and 65535 are red, 25500 is green and 46920 is blue." use="OPTIONAL"/>
+			<parameter name="pTime" displayName="Transition Time Factor (100ms)" type="number" doc:description="The duration of the transition from the light’s current state to the new state. This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transitiontime:10 will make the transition last 1 second. Set value to 0 to leave it unchanged." defaultValue="0" use="OPTIONAL"/>
+		</parameters>
+		<body>
+		<mule:choice>
+			<mule:when expression="#[vars.pTime as Number == '0']">
+				<mule:set-payload value="#['{ hue:' + vars.pValue + '}']" mimeType="application/json"/>	
+			</mule:when>
+			<mule:otherwise>
+				<mule:set-payload value="#[ '{hue:' + vars.pValue + ',	transitiontime:' + vars.pTime +'}' ]" mimeType="application/json"/>			
+			</mule:otherwise>
+		</mule:choice>
+			<http:request config-ref="bridge-config" path="#[ vars.pUsername + '/lights/' + vars.pId + '/state' ]" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+
+	<operation displayName="Set Saturation" name="set-light-state-sat"
+				doc:description="Set the saturation value.">
+		<parameters>
+			<parameter name="pId" displayName="Light ID" type="number" />
+			<parameter name="pValue" displayName="Saturation Value (0-254)" type="number" doc:description="254 is the most saturated (colored) and 0 is the least saturated (white)." />
+			<parameter name="pTime" displayName="Transition Time Value (x100ms)" type="number" doc:description="The duration of the transition from the light’s current state to the new state. This is given as a multiple of 100ms and defaults to 4 (400ms). For example, setting transitiontime:10 will make the transition last 1 second." defaultValue="0" />
+		</parameters>
+		<body>
+			<mule:set-payload value="#[ '{sat:' ++ vars.pValue ++ ',transitiontime:' ++ vars.pTime ++ '}' ]" mimeType="application/json"/>
+			<http:request config-ref="bridge-config" path="#[vars.pUsername ++ '/lights/' ++ vars.pId ++ '/state']" method="PUT"/>
+		</body>
+		<output type="LightStateChangeResponseType" />
+	</operation>
+
+</module>

@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/LightStateResponseType",
+    "definitions": {
+        "LightStateResponseType": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "state": {
+                    "$ref": "#/definitions/State"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "modelid": {
+                    "type": "string"
+                },
+                "swversion": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "pointsymbol": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [],
+            "title": "LightStateResponseType"
+        },
+        "State": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "on": {
+                    "type": "boolean"
+                },
+                "bri": {
+                    "type": "integer"
+                },
+                "hue": {
+                    "type": "integer"
+                },
+                "sat": {
+                    "type": "integer"
+                },
+                "xy": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "ct": {
+                    "type": "integer"
+                },
+                "alert": {
+                    "type": "string"
+                },
+                "effect": {
+                    "type": "string"
+                },
+                "colormode": {
+                    "type": "string"
+                },
+                "reachable": {
+                    "type": "boolean"
+                }
+            },
+            "required": [],
+            "title": "State"
+        }
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/LightStateChangeResponseType"
+    },
+    "definitions": {
+        "LightStateChangeResponseType": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "success": {
+                    "$ref": "#/definitions/Success"
+                },
+                "error": {
+                    "$ref": "#/definitions/Error"
+                }
+            },
+            "required": [],
+            "title": "LightStateChangeResponseType"
+        },
+        "Error": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "format": "integer"
+                }
+            },
+            "required": [],
+            "title": "Error"
+        },
+        "Success": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "/lights/1/state/on": {
+                    "type": "boolean"
+                },
+                "/lights/1/state/bri": {
+                    "type": "integer"
+                },
+                "/lights/1/state/hue": {
+                    "type": "integer"
+                },
+                "/lights/1/state/sat": {
+                    "type": "integer"
+                },
+                "/lights/1/state/xy": {
+                    "type": "integer"
+                },
+                "/lights/1/state/ct": {
+                    "type": "integer"
+                },
+                "/lights/1/state/alert": {
+                    "type": "string"
+                },
+                "/lights/1/state/effect": {
+                    "type": "string"
+                },
+                "/lights/1/state/transitiontime": {
+                    "type": "integer"
+                },
+                "/lights/1/state/bri_inc": {
+                    "type": "integer"
+                },
+                "/lights/1/state/sat_inc": {
+                    "type": "integer"
+                },
+                "/lights/1/state/hue_inc": {
+                    "type": "integer"
+                },
+                "/lights/1/state/ct_inc": {
+                    "type": "integer"
+                },
+                "/lights/1/state/xy_inc": {
+                    "type": "integer"
+                }
+            },
+            "required": [],
+            "title": "Success"
+        }
+    }
+}
+

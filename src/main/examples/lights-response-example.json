@@ -1,0 +1,98 @@
+{
+	"1": {
+		"modelid": "LCT001",
+		"name": "Hue Lamp 1",
+		"swversion": "65003148",
+		"state": {
+			"xy": [
+				0,
+				0
+			],
+			"ct": 0,
+			"alert": "none",
+			"sat": 254,
+			"effect": "none",
+			"bri": 254,
+			"hue": 4444,
+			"colormode": "hs",
+			"reachable": true,
+			"on": true
+		},
+		"type": "Extended color light",
+		"pointsymbol": {
+			"1": "none",
+			"2": "none",
+			"3": "none",
+			"4": "none",
+			"5": "none",
+			"6": "none",
+			"7": "none",
+			"8": "none"
+		},
+		"uniqueid": "00:17:88:01:00:d4:12:08-0a"
+	},
+	"2": {
+		"modelid": "LCT001",
+		"name": "Hue Lamp 2",
+		"swversion": "65003148",
+		"state": {
+			"xy": [
+				0.346,
+				0.3568
+			],
+			"ct": 201,
+			"alert": "none",
+			"sat": 144,
+			"effect": "none",
+			"bri": 254,
+			"hue": 23536,
+			"colormode": "hs",
+			"reachable": true,
+			"on": true
+		},
+		"type": "Extended color light",
+		"pointsymbol": {
+			"1": "none",
+			"2": "none",
+			"3": "none",
+			"4": "none",
+			"5": "none",
+			"6": "none",
+			"7": "none",
+			"8": "none"
+		},
+		"uniqueid": "00:17:88:01:00:d4:12:08-0b"
+	},
+	"3": {
+		"modelid": "LCT001",
+		"name": "Hue Lamp 3",
+		"swversion": "65003148",
+		"state": {
+			"xy": [
+				0.346,
+				0.3568
+			],
+			"ct": 201,
+			"alert": "none",
+			"sat": 254,
+			"effect": "none",
+			"bri": 254,
+			"hue": 65136,
+			"colormode": "hs",
+			"reachable": true,
+			"on": true
+		},
+		"type": "Extended color light",
+		"pointsymbol": {
+			"1": "none",
+			"2": "none",
+			"3": "none",
+			"4": "none",
+			"5": "none",
+			"6": "none",
+			"7": "none",
+			"8": "none"
+		},
+		"uniqueid": "00:17:88:01:00:d4:12:08-0c"
+	}
+}

@@ -1,0 +1,121 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "additionalProperties": {
+        "$ref": "#/definitions/LightsResponseValue"
+    },
+    "definitions": {
+        "LightsResponseValue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "modelid": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "swversion": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "state": {
+                    "$ref": "#/definitions/State"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "AlertPointsymbol": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/AlertPointsymbol"
+                    }
+                },
+                "EffectPointsymbol": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/EffectPointsymbol"
+                    }
+                },
+                "uniqueid": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "modelid",
+                "name",
+                "pointsymbol",
+                "state",
+                "swversion",
+                "type",
+                "uniqueid"
+            ],
+            "title": "LightsResponseValue"
+        },
+        "State": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "xy": {
+                    "type": "array",
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "ct": {
+                    "type": "integer"
+                },
+                "alert": {
+                    "$ref": "#/definitions/AlertPointsymbol"
+                },
+                "sat": {
+                    "type": "integer"
+                },
+                "effect": {
+                    "$ref": "#/definitions/EffectPointsymbol"
+                },
+                "bri": {
+                    "type": "integer"
+                },
+                "hue": {
+                    "type": "integer"
+                },
+                "colormode": {
+                    "type": "string"
+                },
+                "reachable": {
+                    "type": "boolean"
+                },
+                "on": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "alert",
+                "bri",
+                "colormode",
+                "ct",
+                "effect",
+                "hue",
+                "on",
+                "reachable",
+                "sat",
+                "xy"
+            ],
+            "title": "State"
+        },
+        "AlertPointsymbol": {
+            "type": "string",
+            "enum": [
+                "none"
+            ],
+            "title": "AlertPointsymbol"
+        },
+        "EffectPointsymbol": {
+            "type": "string",
+            "enum": [
+                "none"
+            ],
+            "title": "EffectPointsymbol"
+        }
+    }
+}
