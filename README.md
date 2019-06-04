@@ -37,7 +37,7 @@ SYSTEM LAYER|                           |
 
 ## Changelog
 
-1.0.xx Initial release.
+1.0.73 Initial release.
 
 ## Contact
 
